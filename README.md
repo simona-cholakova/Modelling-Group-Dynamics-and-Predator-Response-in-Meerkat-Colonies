@@ -1,5 +1,5 @@
 
-# 🦡 Modelling Group Dynamics and Predator Response in Meerkat Colonies
+# Modelling Group Dynamics and Predator Response in Meerkat Colonies
 
 *A collective animal behaviour project: simulating how meerkat groups coordinate movement and react to predators.*
 
