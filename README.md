@@ -29,9 +29,16 @@ In this project we plan to build such a model. We will ground it in published bi
 
 Our work builds on the following papers:
 
-1. **Discrete call types referring to predation risk enhance the efficiency of the meerkat sentinel system**
-2. **Behaviour Modelling of Social Animals via Causal Structure Discovery and Graph Neural Networks**
-3. **Moving calls: a vocal mechanism underlying quorum decisions in cohesive groups**
+Here are the three papers as clickable links, each pointing to its DOI:
+
+1. [**Discrete call types referring to predation risk enhance the efficiency of the meerkat sentinel system**](https://doi.org/10.1038/srep44436)
+   Rauber & Manser, *Scientific Reports*, 2017. DOI: 10.1038/srep44436
+
+2. [**Behaviour Modelling of Social Animals via Causal Structure Discovery and Graph Neural Networks**](https://doi.org/10.48550/arXiv.2312.14333)
+   Gendron et al., arXiv preprint, 2023. DOI: 10.48550/arXiv.2312.14333
+
+3. [**Moving calls: a vocal mechanism underlying quorum decisions in cohesive groups**](https://doi.org/10.1098/rspb.2010.1739)
+   Bousquet, Sumpter & Manser, *Proceedings of the Royal Society B*, 2011. DOI: 10.1098/rspb.2010.1739
 
 ### What these papers are about
 
