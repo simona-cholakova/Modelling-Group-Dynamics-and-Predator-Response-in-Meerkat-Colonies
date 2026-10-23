@@ -3,15 +3,15 @@
 
 ---
 
-## 📖 Project Description
+## Project Description
 
-Meerkats live in cohesive groups where individuals take turns acting as sentinels, emit specific call types that signal predation risk, and use vocal "moving calls" to decide when the group moves on. Existing computational work on social animal behaviour (including meerkat data) models movement and interaction structure, but to our current knowledge, no model combines sentinel rotation, referential alarm calls, and quorum movement in one simulation.
+Meerkats live in cohesive groups where sentinels take turns watching for predators, distinct call types signal different levels of risk, and moving calls determine when the group sets off. Existing computational work on social animals models movement and interaction structure, but to our knowledge no simulation combines sentinel rotation, referential alarm calls and quorum-based movement.
 
-In this project we plan to build such a model. We will ground it in published biological research on meerkat sentinel behaviour and alarm calls, and use it to simulate group dynamics and predator response.
+This project builds such a simulation, grounded in published meerkat research. We focus on how groups coordinate collective movement, examining how quorum effects emerge from data, how they depend on group size, and whether a simple rule-based model can outperform complex learned models as a generator of realistic group behaviour.
 
 ---
 
-## 👥 Team
+## Team
 
 | Name | GitHub account |
 |------|----------------|
@@ -21,11 +21,9 @@ In this project we plan to build such a model. We will ground it in published bi
 
 ---
 
-## 📚 Starting Point
+## Starting Point
 
 Our work builds on the following papers:
-
-Here are the three papers as clickable links, each pointing to its DOI:
 
 1. [**Discrete call types referring to predation risk enhance the efficiency of the meerkat sentinel system**](https://doi.org/10.1038/srep44436)
    Rauber & Manser, *Scientific Reports*, 2017. DOI: 10.1038/srep44436
@@ -46,7 +44,7 @@ Here are the three papers as clickable links, each pointing to its DOI:
 
 ---
 
-## 🎯 Our Plan
+## Our Plan
 
 ### Research questions
 
@@ -58,9 +56,8 @@ Here are the three papers as clickable links, each pointing to its DOI:
 
 ---
 
-## 📈 Progress Log
+## Progress Log
 
-_This section will be updated regularly._
 
 | Date | Update |
 |------|--------|
