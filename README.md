@@ -5,7 +5,7 @@
 
 ## 📖 Project Description
 
-Meerkats live in cohesive groups where individuals take turns acting as sentinels, emit specific call types that signal predation risk, and use vocal "moving calls" to decide when the group moves on. Existing computational work on social animal behaviour (including meerkat data) models movement and interaction structure, but **there is no existing simulation of how meerkat groups behave in the presence of predators**.
+Meerkats live in cohesive groups where individuals take turns acting as sentinels, emit specific call types that signal predation risk, and use vocal "moving calls" to decide when the group moves on. Existing computational work on social animal behaviour (including meerkat data) models movement and interaction structure, but to our current knowledge, no model combines sentinel rotation, referential alarm calls, and quorum movement in one simulation.
 
 In this project we plan to build such a model. We will ground it in published biological research on meerkat sentinel behaviour and alarm calls, and use it to simulate group dynamics and predator response.
 
@@ -48,19 +48,13 @@ Here are the three papers as clickable links, each pointing to its DOI:
 
 ## 🎯 Our Plan
 
-### Main extension
-
-- 🐾 Model **meerkat behaviour in the presence of predators**
-- 🖥️ Fill the gap: **no existing CS simulation** covers this
-- 🔬 Use **biological research** to inform and parameterise the model
-
-### 🌟 Stretch goals (if time permits)
+### Research questions
 
 **Quorum and movement** (Bousquet et al. + Gendron et al.)
-
-- **Causal discovery of quorum:** Can causal discovery recover the quorum effect from observational data? For instance, do the links "number of simultaneous movers → next-step movement" show a threshold-like (sigmoidal) dependence?
+- **Causal discovery of quorum:** Can causal discovery learn the quorum effect from observational data? That is, will the model Gendron et al. also display the quorum effect observed in the research of Bousquet et al.
 - **Quorum threshold vs. group size:** Does the quorum threshold scale with group size? Bousquet's groups ranged from 6 to 19 individuals, so a model could test whether the threshold *T* stays near 2–3 or grows with *N*, which they flag as an open question.
-- **Mechanistic rule vs. black box:** Is a mechanistic quorum rule (a sigmoid with parameters *T* and *β*) a better generative model of group speed changes than a black-box GNN or LSTM? Gendron et al. found their models match accuracy but produce unrealistic simulated sequences, so a rule-informed prior might help.
+- **Simple rule vs. Complex AI:** Is a simple quorum rule (a sigmoid with parameters *T* and *β*) a better generative model of group speed changes than a complex AI like GNN or LSTM? Gendron et al. found their models match accuracy but produce unrealistic simulated sequences seen from statistical point of view, so a model enforced with certain rules might help.
+
 
 ---
 
