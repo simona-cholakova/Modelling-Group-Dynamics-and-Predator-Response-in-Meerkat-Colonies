@@ -1,17 +1,13 @@
 
 # Modelling Group Dynamics and Predator Response in Meerkat Colonies
 
-*A collective animal behaviour project: simulating how meerkat groups coordinate movement and react to predators.*
-
-
-
 ---
 
 ## 📖 Project Description
 
-Meerkats live in cohesive groups where individuals take turns acting as sentinels, emit specific call types that signal predation risk, and use vocal "moving calls" to decide when the group moves on. Existing computational work on social animal behaviour (including meerkat data) models movement and interaction structure, but **there is no existing computer-science simulation of how meerkat groups behave in the presence of predators**.
+Meerkats live in cohesive groups where individuals take turns acting as sentinels, emit specific call types that signal predation risk, and use vocal "moving calls" to decide when the group moves on. Existing computational work on social animal behaviour (including meerkat data) models movement and interaction structure, but **there is no existing simulation of how meerkat groups behave in the presence of predators**.
 
-In this project we plan to build such a model. We will ground it in published biological research on meerkat sentinel behaviour and alarm calls, and use it to simulate group dynamics and predator response. If time allows, we will also investigate whether quorum-based movement decisions can be recovered from observational data and used as a mechanistic prior for the model.
+In this project we plan to build such a model. We will ground it in published biological research on meerkat sentinel behaviour and alarm calls, and use it to simulate group dynamics and predator response.
 
 ---
 
@@ -70,7 +66,7 @@ Here are the three papers as clickable links, each pointing to its DOI:
 
 ## 📈 Progress Log
 
-_This section will be updated regularly during the course._
+_This section will be updated regularly._
 
 | Date | Update |
 |------|--------|
