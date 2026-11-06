@@ -53,6 +53,16 @@ Our work builds on the following papers:
 - **Quorum threshold vs. group size:** Does the quorum threshold scale with group size? Bousquet's groups ranged from 6 to 19 individuals, so a model could test whether the threshold *T* stays near 2–3 or grows with *N*, which they flag as an open question.
 - **Simple rule vs. Complex AI:** Is a simple quorum rule (a sigmoid with parameters *T* and *β*) a better generative model of group speed changes than a complex AI like GNN or LSTM? Gendron et al. found their models match accuracy but produce unrealistic simulated sequences seen from statistical point of view, so a model enforced with certain rules might help.
 
+## Milestones
+
+Report deadlines are tracked as [GitHub milestones](../../milestones). Each milestone groups the issues needed to deliver that report. 
+
+| Milestone | Deadline | Deliverables | Status |
+|-----------|----------|--------------|--------|
+| **Report 1** | 13 November 2026 | Review of concepts and existing models, general overview of the problem, proposed approach. 4 pages max. | ⬜ In progress |
+| **Report 2** | 11 December 2026 | Polished Report 1 based on feedback, detailed methods, proposed verification methodology. Author contributions in Acknowledgements. 4 pages max. | ⬜ Not started |
+| **Final report and presentation** | Friday, 8 January 2027 | Final polished report (max 6 pages, max 3000 words, with GitHub link and author contributions), 5 min presentation slides, 3 min narrated video (mp4, 1280x720@30fps, with running simulation), polished README with run instructions. | ⬜ Not started |
+
 
 ---
 
