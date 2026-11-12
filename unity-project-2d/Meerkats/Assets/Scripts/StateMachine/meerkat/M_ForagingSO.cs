@@ -42,7 +42,7 @@ public class M_ForagingSO : StateSO {
     
     
 
-    private void Awake() {
+    private void OnEnable() {
         if(_state == null)
         {
             _state = new M_Foraging(exploringForce,  maxTurn, repulsiveForce, attractiveForce, closeLimit, farLimit, digCooldown);
