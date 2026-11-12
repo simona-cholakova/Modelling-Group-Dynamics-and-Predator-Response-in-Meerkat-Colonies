@@ -3136,8 +3136,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1564191894}
   - component: {fileID: 1564191893}
+  - component: {fileID: 1564191895}
   m_Layer: 6
-  m_Name: Circle
+  m_Name: Meerkat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3218,6 +3219,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 20331256}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1564191895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564191892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bbd0eb45f44a6d4ab5da00d3423c97e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Meerkat
+  velocityVector: {x: 0, y: 0, z: 0}
+  _health: 0
+  _maxHealth: 100
+  initialState: {fileID: 0}
+  callManager: {fileID: 11400000, guid: 785c68c42085e754a80f0e1f2fcc0aec, type: 2}
+  callMemory: 20
 --- !u!1 &1647276846
 GameObject:
   m_ObjectHideFlags: 0

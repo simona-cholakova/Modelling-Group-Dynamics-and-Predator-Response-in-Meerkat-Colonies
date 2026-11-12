@@ -42,7 +42,7 @@ public class Entity : MonoBehaviour
         stateMachine = new StateMachine(initialState);   
     }
 
-    private void Update() {
+    protected virtual void Update() {
         stateMachine.Update(this);
         this.transform.position += (velocityVector * Time.deltaTime);
     }

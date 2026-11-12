@@ -1,13 +1,13 @@
 using UnityEngine;
 
-class Call
+public class Call
 {
-    
-    readonly public CallType type;
+    readonly public static int numberOfCalls = 6;
+    readonly public CT type;
     readonly public Vector3 pos;
     readonly public Vector3 direction;
 
-    public Call(CallType type, Vector3 pos, Vector3 direction)
+    public Call(CT type, Vector3 pos, Vector3 direction)
     {
         this.type = type;
         this.pos = pos;
@@ -15,7 +15,7 @@ class Call
     }
 }
 
-enum CallType
+public enum CT
 {
     closeCall,
     movingCall,
