@@ -53,6 +53,7 @@ public class Environment : MonoBehaviour {
         {
             // - instantiate new food obj
             go = Instantiate(foodPrefab);
+            go.GetComponent<Food>().SetManager(this); //without it, the first time a meerkat eats food -error, because Food doesn’t know its manager
             total_spawned_food++;
         }
         currently_spawned_food++;

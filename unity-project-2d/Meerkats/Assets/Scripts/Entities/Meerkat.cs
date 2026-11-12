@@ -14,6 +14,9 @@ public class Meerkat : Entity
     private int[] callsHeard;
     private float[] callLastTime;
 
+    private Vector3 _avgCCPos;    // avg position of close call pos
+    public Vector3 averageCloseCallPos {get {return _avgCCPos; }}
+    public Vector3 threatPosition;   // where the predator is
 
     [SerializeField]
     [Tooltip("For how long (seconds) to memorize certain calls")]
