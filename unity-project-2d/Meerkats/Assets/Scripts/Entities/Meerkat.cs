@@ -9,12 +9,11 @@ public class Meerkat : Entity
     [SerializeField]
     private CallManager callManager;
     private Queue<Call> callQueue;
-    private Queue<Call> processedCloseCalls;
+    private Queue<Call> _processedCloseCalls;
+    public Queue<Call> processedCloseCalls {get {return _processedCloseCalls; }}
     private int[] callsHeard;
     private float[] callLastTime;
 
-    private Vector3 _avgCCPos;    // avg position of close call pos
-    public Vector3 averageCloseCallPos {get {return _avgCCPos; }}
 
     [SerializeField]
     [Tooltip("For how long (seconds) to memorize certain calls")]
@@ -31,7 +30,7 @@ public class Meerkat : Entity
     private void Start() {
         callManager.addMeerkat(this);
         callQueue = new Queue<Call>(callManager.MaxQueueSize);
-        processedCloseCalls = new Queue<Call>(callManager.MaxQueueSize);
+        _processedCloseCalls = new Queue<Call>(callManager.MaxQueueSize);
         callsHeard = new int[Call.numberOfCalls];
         callLastTime = new float[Call.numberOfCalls];
     }
@@ -75,18 +74,12 @@ public class Meerkat : Entity
             return;
         }
 
-        int n = Mathf.Max(processedCloseCalls.Count, callManager.MaxQueueSize);
+        int n = Mathf.Max(_processedCloseCalls.Count, callManager.MaxQueueSize);
         if(n == callManager.MaxQueueSize)
         {
-            Call lastCall = processedCloseCalls.Dequeue();
-            _avgCCPos -= 1/n * lastCall.pos;
+            _processedCloseCalls.Dequeue();
         }
-        else
-        {
-            _avgCCPos = n/(n+1) * _avgCCPos;
-        }
-        _avgCCPos += 1/(n+1) * call.pos;
-        processedCloseCalls.Enqueue(call);
+        _processedCloseCalls.Enqueue(call);
     }
 
     private void ForgetCalls()
