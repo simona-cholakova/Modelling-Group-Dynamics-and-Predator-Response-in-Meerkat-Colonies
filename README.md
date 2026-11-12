@@ -34,6 +34,9 @@ Our work builds on the following papers:
 3. [**Moving calls: a vocal mechanism underlying quorum decisions in cohesive groups**](https://doi.org/10.1098/rspb.2010.1739)
    Bousquet, Sumpter & Manser, *Proceedings of the Royal Society B*, 2011. DOI: 10.1098/rspb.2010.1739
 
+4. [**Collective close calling mediates group cohesion in foraging meerkats via spatially determined differences in call rates**](https://doi.org/10.1016/j.anbehav.2021.12.014)
+   Engesser & Manser, *Animal Behaviour*, 2022. DOI: 10.1016/j.anbehav.2021.12.014
+
 ### What these papers are about
 
 | # | Paper | Summary |
@@ -41,6 +44,7 @@ Our work builds on the following papers:
 | 1 | Discrete call types referring to predation risk… | _Summary: how meerkat sentinels use distinct call types to signal predation risk and how this improves the sentinel system's efficiency._ |
 | 2 | Behaviour Modelling of Social Animals via Causal Structure Discovery and GNNs | _Summary: uses causal structure discovery and graph neural networks to model interactions and behaviour in social animal groups._ |
 | 3 | Moving calls: a vocal mechanism underlying quorum decisions… | _Summary: how moving calls drive quorum decisions about when a cohesive group starts moving._ |
+| 4 | Collective close calling mediates group cohesion in foraging meerkats… | _Summary: how foraging meerkats adjust their close call rates according to their proximity to groupmates, so that local differences in call rates create "vocal hotspots" of high density that attract and may guide group movement._ |
 
 ---
 
