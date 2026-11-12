@@ -40,7 +40,7 @@ public class M_Foraging : MState
 
     protected override void onExit(Entity entity)
     {
-        
+        entity.velocityVector = Vector3.zero;
     }
 
     protected override void onUpdate(Entity entity)
