@@ -16,7 +16,7 @@ public class Environment : MonoBehaviour {
     private int total_spawned_food = 0;
 
     [SerializeField]
-    private Vector2 MAX_POS;    // food will be spawned between -MAX_POS and MAX_POS
+    private float MAX_X, MAX_Y;    // food will be spawned between -MAX_X and +MAX_X, same for y
 
     private Stack<GameObject> dead_food;
 
@@ -24,29 +24,50 @@ public class Environment : MonoBehaviour {
         dead_food = new Stack<GameObject>(MAX_FOOD_SPOTS);
     }
 
-    public void pool_food(Food food)
+    public void poolFood(Food food)
     {
         currently_spawned_food--;
 
-        // todo - deactivate obj, put it in dead_food
+        // - deactivate obj, put it in dead_food
+        food.gameObject.SetActive(false);
+        dead_food.Push(food.gameObject);
     }
 
-    private void spawn_food()
+    private void spawnFood()
     {
         GameObject go;
         if(total_spawned_food == MAX_FOOD_SPOTS)
         {
-            // todo - check the pool
-
-            // todo - if empty don't spawn
-            // todo - else spawn a food in a random pos
-            // go = dead_food.Pop
+            // - check the pool
+            // - if empty don't spawn
+            // - else spawn a food in a random pos
+            if(dead_food.Count == 0){
+                return;
+            }
+            else
+            {
+                go = dead_food.Pop();
+            }   
         }
         else
         {
-            // todo - instantiate new food obj
-            
+            // - instantiate new food obj
+            go = Instantiate(foodPrefab);
+            total_spawned_food++;
         }
+        currently_spawned_food++;
+        
+        float x = Random.Range(-MAX_X, MAX_X);
+        float y = Random.Range(-MAX_Y, MAX_Y);
+        go.transform.position = new Vector3(x, y, -5);
+        go.SetActive(true);
     }
 
+    void Update()
+    {
+        while (currently_spawned_food < MAX_FOOD_SPOTS)
+        {
+            spawnFood();
+        }
+    }
 }

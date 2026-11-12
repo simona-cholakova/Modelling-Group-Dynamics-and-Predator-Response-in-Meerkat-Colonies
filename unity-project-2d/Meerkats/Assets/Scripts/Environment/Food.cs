@@ -16,6 +16,6 @@ public class Food : MonoBehaviour {
 
     public void Consume()
     {
-        manager.pool_food(this);
+        manager.poolFood(this);
     }
 }
