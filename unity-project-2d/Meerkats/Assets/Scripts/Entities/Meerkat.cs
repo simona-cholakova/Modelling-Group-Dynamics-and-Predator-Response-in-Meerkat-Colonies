@@ -6,6 +6,7 @@ using UnityEngine;
 public class Meerkat : Entity
 {
 
+    // CALL variables
     [SerializeField]
     private CallManager callManager;
     private Queue<Call> callQueue;
@@ -13,17 +14,50 @@ public class Meerkat : Entity
     public Queue<Call> processedCloseCalls {get {return _processedCloseCalls; }}
     private int[] callsHeard;
     private float[] callLastTime;
-
-    private Vector3 _avgCCPos;    // avg position of close call pos
-    public Vector3 averageCloseCallPos {get {return _avgCCPos; }}
-    public Vector3 threatPosition;   // where the predator is
-
     [SerializeField]
     [Tooltip("For how long (seconds) to memorize certain calls")]
     private float callMemory = 20;      // for how long (seconds) to memorize certain calls
     // todo - can make above a different length for every call
 
 
+
+    [SerializeField]
+    [Tooltip("For how long (seconds) to wait until giving a call")]
+    private float callCooldown = 10;      // for how long (seconds) to memorize certain calls
+    // todo - above is def not a fixed value
+    
+
+    private float _lastCallTime = 0f;
+
+    // END CALL variables
+
+
+    // Food variables
+    [SerializeField]
+    [Tooltip("When digging for food, how big is the area that is checked for food")]
+    private float digRadius = 1f;
+    [SerializeField]
+    [Tooltip("Patience when foraging, how many unsuccessfull attempts until it gives a move call, to get the group to move to another spot. Should be at least 1.")]
+    private int _foragingPatience;
+    // todo - maybe model above with a float and some function?
+
+    private float _failedDigs;
+    public float failedDigs {get {return _failedDigs;} set {_failedDigs = value; }}
+    // * public version should be used by foraging state
+
+
+    private float _lastDigTime;
+    public float timeSinceLastDig {get {return Time.time - _lastDigTime; }}
+
+    public bool tryMoveCall {get {return _failedDigs >= _foragingPatience; }}
+    // END Food variables
+    
+    // Predator variables
+    public Vector3 threatPosition;   // where the predator is
+    // END Predator variables
+
+
+    private readonly int foodLayer = 8;
 
     public void receiveCall(Call call)
     {
@@ -96,8 +130,41 @@ public class Meerkat : Entity
             }
         }
     }
-    // CALL PROCESSING METHODS
 
+    public bool MakeCall(Call call)
+    {
+        // ? this method is so that the states can make a call
+        float now = Time.time;
+        if(now - _lastCallTime < callCooldown) return false;
+
+        callManager.sendCall(call);
+        _lastCallTime = now;
+
+        return true;
+    }
+    // END CALL PROCESSING METHODS
+
+     // Food methods
+    public void Dig()
+    {
+        // * - cast a collider at current spot
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, digRadius, foodLayer);
+
+        // * - if any food is hit, consume it
+        if(hit != null)
+        {
+            // ? not checking if below is null, since above collision is cast on foodLayer only
+            Food food = hit.GetComponent<Food>();
+            food.Consume();
+            _failedDigs = 0;
+
+            // todo - energy gained and stuff - 2nd progress report
+        }else _failedDigs++;
+
+        _lastDigTime = Time.time;
+
+    }
+    // END Food methods
 
     protected override void Update()
     {

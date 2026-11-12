@@ -13,7 +13,10 @@ public class M_Foraging : MState
     private float maxTurn;  // maximum angle in which a meerkat changes direction
     private float explore_f;    // force for heading in the direction decided by current + above angle
 
-    public M_Foraging(float explore_f, float maxTurn, float repulse_f, float attract_f, float close_limit, float far_limit)
+    private float dig_cooldown;     // how much time to pass until it tries to dig again
+    // todo - use some tricks so that it doesn't try to dig in the same spot
+    // todo - with above may also need to change how exploration is implemented
+    public M_Foraging(float explore_f, float maxTurn, float repulse_f, float attract_f, float close_limit, float far_limit, float dig_cooldown)
     {
         this.explore_f = explore_f;
         this.maxTurn = maxTurn;
@@ -22,11 +25,17 @@ public class M_Foraging : MState
         this.attract_f = attract_f;
         this.close_limit = close_limit;
         this.far_limit = far_limit;
+
+        this.dig_cooldown = dig_cooldown;
     }
 
     protected override void onEnter(Entity entity)
     {
-        
+        if(entity is not Meerkat m) return; 
+        m.failedDigs = 0;
+        // reset failed dig counter for foraging patience
+        // related to how long to try until giving up
+        // and moving to another location
     }
 
     protected override void onExit(Entity entity)
@@ -70,5 +79,18 @@ public class M_Foraging : MState
         // todo - digging
         // todo - some random probability that a meerkat will start digging
         // todo - should grow with the time spent since last digging or start of foraging
+        if(m.timeSinceLastDig >= dig_cooldown && Random.Range(0f, 1f) < 0.8f)
+        {
+            // the random is so that it doesn't automatically dig whenever possible
+            // though 80% is so that it doesn't wait too much
+            m.Dig();
+            // todo - make the meerkat stationary for a few secs while it digs
+        }
+
+        if (m.tryMoveCall)
+        {
+                m.MakeCall(new Call(CT.movingCall, Vector3.zero, Vector3.zero));
+            // 0 vectors since this call is used just for transitioning to another state
+        }
     }
 }

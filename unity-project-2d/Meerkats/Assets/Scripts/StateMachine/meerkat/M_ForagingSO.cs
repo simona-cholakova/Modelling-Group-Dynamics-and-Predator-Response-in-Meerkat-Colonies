@@ -35,13 +35,17 @@ public class M_ForagingSO : StateSO {
     private float maxTurn = 0.35f;
 
     
+    [SerializeField]
+    [Tooltip("How long to wait (seconds) until trying to dig again")]
+    private float digCooldown = 0.35f;
 
+    
     
 
     private void Awake() {
         if(_state == null)
         {
-            _state = new M_Foraging(exploringForce,  maxTurn, repulsiveForce, attractiveForce, closeLimit, farLimit);
+            _state = new M_Foraging(exploringForce,  maxTurn, repulsiveForce, attractiveForce, closeLimit, farLimit, digCooldown);
         }
     }
 }
