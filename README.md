@@ -1,79 +1,79 @@
-
 # Modelling Group Dynamics and Predator Response in Meerkat Colonies
 
----
+* * *
 
 ## Project Description
 
 Meerkats live in cohesive groups where sentinels take turns watching for predators, distinct call types signal different levels of risk, and moving calls determine when the group sets off. Existing computational work on social animals models movement and interaction structure, but to our knowledge no simulation combines sentinel rotation, referential alarm calls and quorum-based movement.
 
-This project builds such a simulation, grounded in published meerkat research. We focus on how groups coordinate collective movement, examining how quorum effects emerge from data, how they depend on group size, and whether a simple rule-based model can outperform complex learned models as a generator of realistic group behaviour.
+This project builds such a simulation as an agent-based model in Unity (2D). Each meerkat is an autonomous agent driven by a state machine (foraging, moving, running, recruiting, mobbing) and communicates with the group through six discrete call types: close, moving, foraging, run, recruit and recruit-mob calls. The simulation is grounded in published meerkat research. We focus on how groups coordinate collective movement and respond to predators, examining how quorum effects emerge from call exchange, how they depend on group size, and how call-based rules keep the group cohesive.
 
----
+* * *
 
 ## Team
 
-| Name | GitHub account |
-|------|----------------|
-| _Simona Cholakova_ | [@simona-cholakova](https://github.com/simona-cholakova) |
-| _Filip Trajkoski_ | [@FT1E](https://github.com/FT1E) |
+| Name               | GitHub account                                           |
+|--------------------|----------------------------------------------------------|
+| *Simona Cholakova* | [@simona-cholakova](https://github.com/simona-cholakova) |
+| *Filip Trajkoski*  | [@FT1E](https://github.com/FT1E)                         |
 
-
----
+* * *
 
 ## Starting Point
 
 Our work builds on the following papers:
 
-1. [**Discrete call types referring to predation risk enhance the efficiency of the meerkat sentinel system**](https://doi.org/10.1038/srep44436)
-   Rauber & Manser, *Scientific Reports*, 2017. DOI: 10.1038/srep44436
-
-2. [**Behaviour Modelling of Social Animals via Causal Structure Discovery and Graph Neural Networks**](https://doi.org/10.48550/arXiv.2312.14333)
-   Gendron et al., arXiv preprint, 2023. DOI: 10.48550/arXiv.2312.14333
-
-3. [**Moving calls: a vocal mechanism underlying quorum decisions in cohesive groups**](https://doi.org/10.1098/rspb.2010.1739)
-   Bousquet, Sumpter & Manser, *Proceedings of the Royal Society B*, 2011. DOI: 10.1098/rspb.2010.1739
-
-4. [**Collective close calling mediates group cohesion in foraging meerkats via spatially determined differences in call rates**](https://doi.org/10.1016/j.anbehav.2021.12.014)
-   Engesser & Manser, *Animal Behaviour*, 2022. DOI: 10.1016/j.anbehav.2021.12.014
+1. [**Discrete call types referring to predation risk enhance the efficiency of the meerkat sentinel system**](https://doi.org/10.1038/srep44436) Rauber & Manser, *Scientific Reports*, 2017. DOI: 10.1038/srep44436
+2. [**Behaviour Modelling of Social Animals via Causal Structure Discovery and Graph Neural Networks**](https://doi.org/10.48550/arXiv.2312.14333) Gendron et al., arXiv preprint, 2023. DOI: 10.48550/arXiv.2312.14333
+3. [**Moving calls: a vocal mechanism underlying quorum decisions in cohesive groups**](https://doi.org/10.1098/rspb.2010.1739) Bousquet, Sumpter & Manser, *Proceedings of the Royal Society B*, 2011. DOI: 10.1098/rspb.2010.1739
+4. [**Collective close calling mediates group cohesion in foraging meerkats via spatially determined differences in call rates**](https://doi.org/10.1016/j.anbehav.2021.12.014) Engesser & Manser, *Animal Behaviour*, 2022. DOI: 10.1016/j.anbehav.2021.12.014
 
 ### What these papers are about
 
-| # | Paper | Summary |
-|---|-------|---------|
-| 1 | Discrete call types referring to predation risk… | _Summary: how meerkat sentinels use distinct call types to signal predation risk and how this improves the sentinel system's efficiency._ |
-| 2 | Behaviour Modelling of Social Animals via Causal Structure Discovery and GNNs | _Summary: uses causal structure discovery and graph neural networks to model interactions and behaviour in social animal groups._ |
-| 3 | Moving calls: a vocal mechanism underlying quorum decisions… | _Summary: how moving calls drive quorum decisions about when a cohesive group starts moving._ |
-| 4 | Collective close calling mediates group cohesion in foraging meerkats… | _Summary: how foraging meerkats adjust their close call rates according to their proximity to groupmates, so that local differences in call rates create "vocal hotspots" of high density that attract and may guide group movement._ |
+| # | Paper                                                                         | Summary                                                                                                                                                                                                              |
+|---|-------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1 | Discrete call types referring to predation risk…                              | *Summary: how meerkat sentinels use distinct call types to signal predation risk and how this improves the sentinel system's efficiency.*                                                                            |
+| 2 | Behaviour Modelling of Social Animals via Causal Structure Discovery and GNNs | *Summary: uses causal structure discovery and graph neural networks to model interactions and behaviour in social animal groups.*                                                                                    |
+| 3 | Moving calls: a vocal mechanism underlying quorum decisions…                  | *Summary: how moving calls drive quorum decisions about when a cohesive group starts moving.*                                                                                                                        |
+| 4 | Collective close calling mediates group cohesion in foraging meerkats…        | *Summary: how foraging meerkats adjust their close call rates according to their proximity to groupmates, so that local differences in call rates create "vocal hotspots" that attract and may guide group movement.* |
 
----
+* * *
 
 ## Our Plan
 
 ### Research questions
 
-**Quorum and movement** (Bousquet et al. + Gendron et al.)
-- **Causal discovery of quorum:** Can causal discovery learn the quorum effect from observational data? That is, will the model Gendron et al. also display the quorum effect observed in the research of Bousquet et al.
-- **Quorum threshold vs. group size:** Does the quorum threshold scale with group size? Bousquet's groups ranged from 6 to 19 individuals, so a model could test whether the threshold *T* stays near 2–3 or grows with *N*, which they flag as an open question.
-- **Simple rule vs. Complex AI:** Is a simple quorum rule (a sigmoid with parameters *T* and *β*) a better generative model of group speed changes than a complex AI like GNN or LSTM? Gendron et al. found their models match accuracy but produce unrealistic simulated sequences seen from statistical point of view, so a model enforced with certain rules might help.
+**Quorum and movement** (Bousquet et al.)
+
+- **Quorum from calls:** Does a quorum rule based on the number of moving calls an agent has recently heard (a sigmoid with parameters *T* and *β*) reproduce the group departure behaviour observed in real meerkats?
+- **Quorum threshold vs. group size:** Does the quorum threshold scale with group size? Bousquet's groups ranged from 6 to 19 individuals, so the simulation can test whether the threshold *T* stays near 2–3 or grows with *N*, which they flag as an open question.
+
+**Cohesion and predator response** (Engesser & Manser, Rauber & Manser)
+
+- **Cohesion through close calls:** Can call-rate rules based on proximity to groupmates keep a simulated foraging group cohesive?
+- **Value of discrete alarm calls:** Do referential alarm calls that distinguish levels of risk make the group's response to predators more efficient than a single undifferentiated alarm?
+
+**Simple rules vs. learned models** (Gendron et al.)
+
+- **Simple rule vs. complex AI:** Is a simple rule-based model a better generative model of group behaviour than a learned model such as a GNN or LSTM? Gendron et al. found their models match accuracy but produce unrealistic simulated sequences from a statistical point of view, so a model enforced with certain rules might help.
+
+* * *
 
 ## Milestones
 
-Report deadlines are tracked as [GitHub milestones](../../milestones). Each milestone groups the issues needed to deliver that report. 
+Report deadlines are tracked as GitHub milestones. Each milestone groups the issues needed to deliver that report.
 
-| Milestone | Deadline | Deliverables | Status |
-|-----------|----------|--------------|--------|
-| **Report 1** | 13 November 2026 | Review of concepts and existing models, general overview of the problem, proposed approach. 4 pages max. | ⬜ In progress |
-| **Report 2** | 11 December 2026 | Polished Report 1 based on feedback, detailed methods, proposed verification methodology. Author contributions in Acknowledgements. 4 pages max. | ⬜ Not started |
-| **Final report and presentation** | Friday, 8 January 2027 | Final polished report (max 6 pages, max 3000 words, with GitHub link and author contributions), 5 min presentation slides, 3 min narrated video (mp4, 1280x720@30fps, with running simulation), polished README with run instructions. | ⬜ Not started |
+| Milestone                     | Deadline               | Deliverables                                                                                                                                                                                                                          | Status         |
+|-------------------------------|------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|
+| Report 1                      | 13 November 2026       | Review of concepts and existing models, general overview of the problem, proposed approach. 4 pages max.                                                                                                                              | ⬜ In progress |
+| Report 2                      | 11 December 2026       | Polished Report 1 based on feedback, detailed methods, proposed verification methodology. Author contributions in Acknowledgements. 4 pages max.                                                                                       | ⬜ Not started |
+| Final report and presentation | Friday, 8 January 2027 | Final polished report (max 6 pages, max 3000 words, with GitHub link and author contributions), 5 min presentation slides, 3 min narrated video (mp4, 1280x720@30fps, with running simulation), polished README with run instructions. | ⬜ Not started |
 
-
----
+* * *
 
 ## Progress Log
 
-
-| Date | Update |
-|------|--------|
-| _22.10.2026_ | Repository created |
-
+| Date         | Update                                                               |
+|--------------|----------------------------------------------------------------------|
+| *22.10.2026* | Repository created                                                   |
+| *13.11.2026* | Topic revised to an agent-based Unity simulation of meerkat colonies |
