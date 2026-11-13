@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -53,7 +52,14 @@ public class Meerkat : Entity
     // END Food variables
     
     // Predator variables
-    public Vector3 threatPosition;   // where the predator is
+    private Vector3 _threatPosition;
+    public Vector3 threatPosition {get {return _threatPosition; }}   // where the predator is
+    
+    // below is set to true when predator is seen
+    private bool _inDanger;
+    public bool inDanger {get {return _inDanger;}}
+
+    // todo - set like a stress variable, like for how long to run from predator's last seen position, even after predator is not visible
     // END Predator variables
 
 
@@ -64,6 +70,9 @@ public class Meerkat : Entity
         callQueue.Enqueue(call);
     }
 
+    private void Awake() {
+        
+    }
     private void Start() {
         callManager.addMeerkat(this);
         callQueue = new Queue<Call>(callManager.MaxQueueSize);
@@ -165,6 +174,29 @@ public class Meerkat : Entity
 
     }
     // END Food methods
+    public override void RecalculateView()
+    {
+        base.RecalculateView();
+        _inDanger = CanSee(predatorInfo.predator);
+
+        if (_inDanger){
+            _threatPosition = predatorInfo.position;
+        }else{
+            _threatPosition = Vector3.zero;
+        }
+    }
+    // Vision methods
+
+    // END Vision methods
+
+    void OnEnable()
+    {
+        meerkatsInfo.Add(this);
+    }
+    void OnDisable()
+    {
+        meerkatsInfo.Remove(this);
+    }
 
     protected override void Update()
     {
@@ -172,7 +204,8 @@ public class Meerkat : Entity
 
         base.Update();
 
-        // todo - forget calls heard over time
+        //  - forget calls heard over time
         ForgetCalls();
+        // todo - how to implement above regarding close calls
     }
 }
