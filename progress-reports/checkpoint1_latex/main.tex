@@ -1,0 +1,229 @@
+\documentclass[9pt,twoside]{pnas-new}
+% Use the lineno option to display guide line numbers if required.
+
+\articletype{COLLECTIVE BEHAVIOUR}%%%% Article topic/classification
+
+\templatetype{pnasmathematics} % Choose template
+% {pnasresearcharticle} = Template for a two-column research article
+% {pnasmathematics} = Template for a one-column mathematics article
+% {pnasinvited} = Template for a PNAS invited submission
+%\onecolumn
+
+
+% todo - remove draft watermarks
+
+\begin{document}
+
+\title{Modelling Group Dynamics and Predator Response in Meerkat Colonies}
+
+% Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
+\author[1]{Simona Cholakova}
+\author[1]{Filip Trajkoski}
+
+\affil[1]{Faculty of Computer and Information Science, University of Ljubljana, 1000 Slovenia}
+% \affil[c]{Affiliation Three}
+
+
+% todo - remove below or not
+% Please add a significance statement to explain the relevance of your work
+\significancestatement{Many animals, from meerkats to fish and birds, survive by moving and staying alert together, yet computer models rarely capture how groups combine vigilance, warning calls and collective decisions. We propose a simulation of meerkat colonies that links rotating sentinels, alarm calls that signal different levels of danger, and group movement triggered once enough members are ready to go. By testing whether a simple, transparent rule can reproduce realistic group behaviour better than complex learned models, this work may help us understand animal cooperation and design more interpretable models of collective behaviour.}
+
+% Please include corresponding author, author contribution and author declaration information
+\authorcontributions{CONTRIBUTIONS}
+\authordeclaration{The authors declare no competing interests.}
+\equalauthors{\textsuperscript{1}S.C. contributed equally to this work with F.T.}
+\correspondingauthor{\textsuperscript{2}To whom correspondence should be addressed. E-mail: sc60333@student.uni-lj.si \\
+ft63405@student.uni-lj.si}
+% todo - change above e-mail forfinal submission
+
+% At least three keywords are required at submission. Please provide three to five keywords, separated by the pipe symbol.
+\keywords{meerkats $|$ collective movement $|$ quorum decision-making $|$ agent-based model $|$ alarm calls $|$ simulation}
+
+\begin{abstract}
+Meerkats forage in cohesive groups, rely on rotating sentinels to watch for predators, and coordinate through distinct call types, yet few computational models capture how vigilance, warning calls and collective movement fit together. Learned models of animal behaviour, such as graph neural networks, can match the accuracy of simple baselines but have been reported to produce statistically unrealistic simulated sequences. This raises the question of whether a learned model is really better than a simple rule derived directly from what is known about the animals. To explore it, we build an agent-based simulation of a meerkat colony in Unity 2D, in which behaviour is governed by transparent rules. In this first report we describe the simulation framework we rebuilt from scratch: agents driven by a state machine, a communication system with six call types, a predator agent and a food environment.
+\end{abstract}
+
+
+% \doi{\url{www.pnas.org/cgi/doi/10.1073/pnas.XXXXXXXXXX}}
+
+\maketitle
+\thispagestyle{firststyle}
+\ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
+
+
+\Firstpage
+
+%The \Firstpage command is used to format the first page text column size. The same size will be maintained for subsequent paragraph until the \Endparasplit or \Parasplit command is encountered.
+
+
+% If your first paragraph (i.e. with the \dropcap) contains a list environment (quote, quotation, theorem, definition, enumerate, itemize...), the line after the list may have some extra indentation. If this is the case, add \parshape=0 to the end of the list environment.
+
+\section{Introduction}
+\label{introduction}
+
+Group-living animals must stay together and stay safe at the same time. Individuals have to decide when to move, where to go and how to react to danger, usually with only local information and no central leader. Meerkats (\emph{Suricata suricatta}) are a well-studied example. They forage in cohesive groups, rely on sentinels who take turns watching for predators while the others forage, and coordinate through a rich vocal repertoire.
+
+Several studies describe how this coordination works. Rauber and Manser \cite{rauber2017discrete} showed that sentinels use discrete call types that refer to predation risk, and that this improves the efficiency of the sentinel system. Bousquet et al. \cite{bousquet2011moving} showed that a cohesive group of meerkats decides to set off through quorum voting. Quorum is the minimal number of votes needed to make a decision, in this case whether the group moves or not. Engesser and Manser \cite{engesser2022collective} found that foraging meerkats adjust their close call rates to their proximity to other meerkats, creating vocal hotspots that attract and may guide group movement.
+
+On the computational side, Gendron et al. \cite{gendron2023behaviour} modelled the behaviour of social animals with causal structure discovery and graph neural networks. Their models match the accuracy of baselines, but the sequences they simulate are statistically unrealistic. This suggests that learned models alone may not capture the mechanisms behind collective behaviour. To our knowledge, no existing simulation combines sentinel rotation, referential alarm calls and quorum-based movement.
+
+In this work we ask whether a learned model is really better than a rule derived directly from what is known about the animals. We build an agent-based simulation of a meerkat colony in Unity 2D, in which behaviour is governed by simple, transparent rules, and we compare it roughly with the learned model of Gendron et al. In this first report we describe the simulation environment we built, which serves as the foundation for the rule-based model.
+
+
+\section{Methods}
+% todo - 
+
+% \subsection{Design}
+\label{model-design}
+In this section, we will describe the model that was designed based on observations made in the cited researches. 
+The design of the model is not yet complete, and we plan to improve it using knowledge from additional observational researches about meerkats.
+
+The base of our model is a state machine, or a deterministic finite automaton (DFA).
+
+For Meerkats we have the following states:
+\begin{itemize}
+    \item Idle State
+    \item Moving State
+    \item Foraging State
+    \item Run State
+    \item Recruit State
+    \item Mob State
+\end{itemize}
+
+The following text will explain what is done in each state, as well as the transitions between them.
+
+\textbf{Idle state} - in this state is simply to model when the meerkats are stationary, possibly doing some action. One such example is when a meerkat is digging for food, which takes a bit of time to check if there is food at a specific spot.
+
+\textbf{Moving state} - this state is used to model when the whole group of meerkats is moving together, looking for an area to forage, i.e. look for food. 
+% What is needed for this state is to model when meerkats transition from this state to a foraging state.
+The movement of the meerkats is a modified version of Reynold's Boids algorithm. 
+Meerkats evolved to communicate mainly through calls, due to their environment involving visual blockages and due to the fact that when meerkats dig for food,
+they don't have a good view on what is above ground. 
+Hence, instead of taking the positions of the neighbours seen visually, we collect information from the close calls given by other meerkats. 
+Separation and cohesion is modeled by whether a close call was given from either a too close or too far position. We are still struggling with the issue how to model the alignment, since in the classic boids with visual perception, each agent can see the direction in which the neighbours are heading, but this is not an information which can be easily inferred from a call.
+
+\textbf{Foraging state} - is for when meerkats are not moving long distances, but rather slowly exploring an area and digging for food. 
+Bousquet et. al. \cite{bousquet2011moving} observed that the transition from \emph{foraging state} to \emph{moving state}, happens through quorum voting. 
+As a small reminder, quorum is the minimal number of votes needed for a group to make a decision. In this specific case, the authors observe that if at least 3 meerkats (in groups of 6 to 19) give moving call, the whole group abandons foraging the area and starts moving to another spot.
+The authors hypothesize a likely cause for an individual meerkat giving a moving call is possibly due to impatience, from failed attempts while digging. And that is how we model a meerkat wanting to give moving call. The movement is implemented by maintaining spacing using close calls plus some exploration in a random direction. 
+
+Note for the following 3 states. An interesting behaviour noticed in meerkats is that they don't always run away from predators. 
+Sometimes they group around a predator, i.e. mob around him, and try to scare him away. Whether a group of meerkats will run away or mob around a predator, in our model depends on the speed of the predator. 
+Graw et. al. \cite{graw2007role} studied this behaviour and showed that wild meerkats will try to mob slow grounded predators (ex. snakes) and run away from fast aerial predators, as well as grounded predators who hunt through fast ambushes. 
+Since our implementation initially focuses on 2D simulation, we design so that meerkats run away from fast predators immediately and try to mob slow predators until attacked.
+
+\textbf{Run State} - is when a meerkat spots a fast predator and runs away from it.
+% todo - maybe can change  above to include spacing maintaining to avoid meerkats bumping into each other if they can collide
+
+\textbf{Recruit State} - when a meerkat spots a slow predator, it doesn't instantly try to mob him. Instead it first tries to recruit at least 2 other meerkats to help with the mobbing. This state is for that recruiting process.
+
+\textbf{Mob State} - when enough meerkats are recruited, they surround the slow predator, stand in an upright pose and make noises to try to scare the predator away. 
+In this process too, other meerkats are recruited as well, but in here we have a minimal amount of meerkats needed. The mobbing continues until the predator starts turning, facing in a different direction from the meerkats, slowly walking , or until the predator attacks a meerkat,
+
+You can notice that in section \ref{introduction}, a few meerkats acting as sentinel guards was mentioned, and this is currently not in the design. To properly design and implement this feature, we need to explore more researches and see if the ones acting as a sentinel are picked at random or if there are some designed meerkats to act as sentinels, or if there is a rotation system where each meerkat acts as a sentinel eventually, or there is some other observation found in nature.
+
+Next, we will describe how we model the predator. For simplicity, we limit there being at most 1 predator on the map. There can be different predators, but only one will be interacting with the meerkats at any given time. And also, the predator has an additional variable \verb|hunger|, which defines how willing the predator is to chase a prey, keep hunting even if mobbed, etc.
+
+The predator is also modeled through a state machine, with the following states:
+\begin{itemize}
+    \item Explore State
+    \item Chase State
+    \item Mobbed State
+    \item Turn away State
+\end{itemize}
+
+\textbf{Explore State} - when the predator doesn't see any meerkats. It explores the map, moving at a normal pace (not too fast). It transitions to chase state when it sees at least 1 meerkat.
+
+\textbf{Chase State} - when a predator chases a specific meerkat.
+Our model currently picks a random meerkat from the seen ones as a target to chase. Some alternative options we are considering are picking the closest one as target and chasing an average position of all the visible meerkats. The latter option doesn't seem very efficient if the group of meerkats is splitting in half and heading in opposite directions.
+The predator moves twice as fast compared to the explore state.
+
+\textbf{Mobbed State} - this state is similar to the chase state, however the predator stands still, or moves slowly, deciding whether to keep hunting or turn away based on hunger. The more hungry a predator is, the more likely it is that it will keep chasing. If it's already satisfied (not hungry), there is a high chance that it will turn way.
+
+\textbf{Turn away State} - is for when a predator decides to turn away from the meerkats who are mobbing him. The predator remains in this state until it sees no meerkats, and a bit more time moving in the same direction. Then it transitions back to explore state. 
+This is different from the run state in meerkats, in the fact that meerkats run away from only 1 entity, meanwhile the predator is running away from multiple entities. 
+Otherwise the same state could be re-used for both cases, from an implementation perspective
+
+% \subsection{Implementation}
+% \label{model-implementation}
+
+
+
+% todo - note on the 2D environment
+% todo - note on the visual perception being a cone
+
+\section{Results}
+\label{results}
+% todo - how far we got with rebuilding the model
+% todo - did we succeed in replicating the same model
+In this section we will discuss the current status of our implementation.
+
+First, the implementation is done in Unity in the UPR 2D pipeline with the code being written in \verb|C#|.
+
+Currently we haven't yet fully implemented the model as described above. The current status is the following:
+\begin{itemize}
+    \item [-] Meerkat State Machine has implemented: Idle State, Moving State, Foraging State, and Run State.
+    \item [-] Predator State Machine has implemented: Explore State and Chase State.
+\end{itemize}
+
+A meerkat is represented by a white circle, a predator by a red (pointy) triangle, and the foods which are collected by the meerkats are represented by a green square. In the future it's possible that we might replace these shapes with some more appropriate sprites.
+
+The visual perception of each entity is modeled as a cone, defined by angle width and radius. We work under the assumption that a predator has tighter vision, but can see further and that a meerkat has wider vision, but can't see as far.
+
+The call communication system in meerkats is implemented by using a Scriptable Object instance as a communication channel, called \verb|CallManager|. So when one meerkat wants to give a call, it doesn't need to have a reference to every other meerkat, just a reference to the \verb|CallManager|, and can be as simple as calling the \verb|CallManager.SendCall()| method, which will further delegate the call to every other meerkat. This can and will be improved by giving the call at appropriate times, but unless a pair of meerkats are really far from each other, a call should be heard almost instantly ($speed = 1 Mach \approx 340 \frac{m}{s}$).
+
+\section{Discussion}
+\label{discussion}
+% todo - what kind of tweaks, ideas we have about changing the model
+% todo - predator idea
+% todo - basically what we plan to do
+
+
+\textbf{Movement.} As mentioned above, meerkats can infer the position of other meerkats through the close calls they frequently give (from 4 times per minute up to 20 times per minute, depending on distance). 
+But the direction in which they are heading cannot be inferred from a given call. One idea is that maybe each meerkat can infer this information visually, not by checking constantly, but with a some frequency, for example once every 5 seconds. 
+Or another idea is that alignment isn't needed, just keep a proper spacing from the other meerkats, and if a meerkat is driven too far from the others, it will be pulled back via close calls. And each meerkat keeps heading in its own direction, which will be fixed by maintaining spacing.
+
+\textbf{Calls.} Calls are currently delivered to every meerkat instantly, which is unrealistic. We will limit how far each call type can be heard and deliver calls after a delay that depends on distance.
+
+\textbf{Predators and sentinels.} We plan to augment our implementation of predators and sentinels, so that the group's response to danger can be studied with the alarm call types described in \cite{rauber2017discrete}. The close-call mechanism of \cite{engesser2022collective}, in which call rates depend on proximity to other meerkats, gives a natural basis for keeping the foraging group together.
+
+\textbf{Rule-based vs.\ learned models.} Our main question is whether a learned model is really better than a rule derived directly from the biology. This follows from the work of Gendron et al. \cite{gendron2023behaviour}, whose models match the accuracy of baselines but produce simulated sequences that are statistically unrealistic. We therefore take a different route: instead of learning behaviour from data, we derive simple rules from the meerkat literature and test whether they produce realistic group behaviour. We plan to log the simulation and compare its behaviour with the learned model, and we expect this comparison to be a rough estimate and not a full benchmark. We will also run the simulation for different group sizes, since the groups studied in \cite{bousquet2011moving} ranged from 6 to 19 individuals, to see whether the quorum threshold stays constant or grows with group size, a question the original authors leave open.
+
+\textbf{Limitations.} A rule-based simulation is only as realistic as the rules we put in. Choosing the parameters, such as $T$, $\beta$, call ranges and speeds, will require care, and we will have to validate them against reported values from the literature, not against our own expectations. The rough comparison with learned models will also say little about their accuracy, so our claims will be limited to realism of the simulated group behaviour.
+
+
+%The \Endparasplit command is used to end the formatting of the text column size that was set by the \Firstpage command. This will restore the default column size for the subsequent text.
+%
+%The \Parasplit command should be used if the page ends in the middle of a paragraph, allowing the column formatting to continue seamlessly on the next page.
+
+
+
+
+% \begin{figure}%[tbhp]
+% \centering
+% \includegraphics[width=.8\linewidth]{frog}
+% \caption{Placeholder image of a frog with a long example legend to show justification setting.}
+% \label{fig:frog1}
+% \end{figure}
+
+
+
+% \begin{SCfigure*}[\sidecaptionrelwidth][t]
+% \centering
+% \includegraphics[width=11.4cm,height=11.4cm]{frog}
+% \caption{This legend would be placed at the side of the figure, rather than below it.}\label{fig:side}
+% \end{SCfigure*}
+
+
+
+\dataavail{The source code, data and all materials used in this work are available in the project \href{https://github.com/simona-cholakova/Modelling-Group-Dynamics-and-Predator-Response-in-Meerkat-Colonies}{GitHub repository}.}
+
+
+\acknow{This work was carried out as part of a course project for Collective Behaviour at the Faculty of Computer and Information Science, University of Ljubljana. We thank Prof.\ Iztok Lebar Bajec for his guidance and feedback. S.C. wrote the introduction and the literature review and prepared the figures. F.T. wrote the methods section and the discussion. Both authors reviewed and copyedited the full manuscript.}
+
+\showacknow % Display the acknowledgements section
+
+% Bibliography
+\bibliography{pnas-sample}
+
+\end{document}
